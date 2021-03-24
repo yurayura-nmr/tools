@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
 
+"""
+Erik Walinda
+Kyoto University
+Graduate School of Medicine
+
+Axes3D requires a weird version of matplotlib for the
+current script to work.
+The problem is in the coloring of the dots, i.e. the c=i statement.
+"""
+
 import matplotlib
 
 # Force matplotlib to not use any Xwindows backend.
@@ -10,14 +20,7 @@ import matplotlib.pyplot as plt
 
 from mpl_toolkits.mplot3d import Axes3D
 
-"""
-2018-04-18
-
-Erik Walinda
-"""
-
 def readFile(filename):
-
     array = []
 
     with open(filename, "rt") as infile:
