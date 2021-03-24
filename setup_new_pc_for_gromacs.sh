@@ -103,7 +103,7 @@ were blas and lapack found?
 """
 cmake .. -DGMX_GPU=CUDA -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.a
 make -j4
-make check
+make check          # all tests must pass. Otherwise trouble with install or hardware. Can fall back on older gromacs.
 ./bin/gmx --version # verify that CUDA was recognized during the build
 sudo make install
 
