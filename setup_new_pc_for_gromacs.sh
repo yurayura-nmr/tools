@@ -82,6 +82,7 @@ chmod +x run ...
 Gromacs wants somewhat new, but CUDA wants somewhat old C and C++ compilers.
 Then we need to rewrite the host_config header so that the compile works.
 """
+sudo apt-get install libhwloc-dev
 sudo apt-get install gcc-7 g++-7
 sudo apt-get install vim
 
