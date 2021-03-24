@@ -62,7 +62,7 @@ wget ..
 tar xvf ...
 mkdir testbuild
 cd testbuild
-cmake ..
+cmake .. -DBUILD_SHARED_LIBS=ON # required to get libblas.so and liblapack.so
 make -j4
 
 sudo make install # note where the libraries are installed; this will be important later when GROMACS is compiled.
@@ -77,7 +77,7 @@ wget ...
 chmod +x run ...
 ./run... -override # need to override otherwise, the installer always complains about the compiler
 
-# 7. GROMACS
+# 7. GROMACS part 1
 """
 Gromacs wants somewhat new, but CUDA wants somewhat old C and C++ compilers.
 Then we need to rewrite the host_config header so that the compile works.
@@ -92,35 +92,17 @@ vi /usr/local/cuda-9.1/include/crt/host_config.h # change this file to work arou
 //#error -- unsupported GNU version! gcc versions later than 6 are not supported!
 #endif /* __GNUC__ > 6 */
 
+# 8. GROMACS part 2
+"""
+Check output of cmake so we do not miss anything.
+was CUDA found? If not, specify with: -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-7.5
+was fftw3 found?
+were blas and lapack found?
+"""
 cmake .. -DGMX_GPU=CUDA -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.a
-
-
-
-sudo apt-get install Hwloc
-
-
-# BLAS
-# build simply with cmake and make install
-
-git clone https://github.com/Reference-LAPACK/lapack.git
-...
-
-# CUDA
-
-http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers/cuda_7.5.18_linux.run
-
-# GROMACS
-
-# CUDA toolkit and driver mismatch can occur
-# check gmx --version after installation if mismatch
-# Manually set compilers if cmake looks for old version like gcc5 or 6
-# Compiler upgrade summary: https://gist.github.com/youmych/122e32cfa1c228c84684fec13b7d52e1
-cmake .. -DGMX_GPU=CUDA -DGMX_BUILD_OWN_FFTW=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.so -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_LAPACK_USER=/usr/local/lib/liblapack.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-7.5 -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7
-
-# CUDA needs manual install from NVIDIA. Apt-get just costs time. apt purge old.
-# It seems after installing drivers reboot necessary?
-# Sometimes apt purge/remove driver>> apt-get install nvidia-driver-460 etc works if lucky. 
-# If message is: Failed to initialize NVML: Driver/library version mismatch --> reboot
+make -j4
+make check
+sudo make install
 
 # chihiro: cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_BLAS_USER=/usr/lib/x86_64-linux-gnu/libblas.so -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_LAPACK_USER=/usr/lib/x86_64-linux-gnu/liblapack.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10.2/ -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DGMX_GPU=CUDA
 # mayuta : cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_BLAS_USER=/usr/lib/libblas.so -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_LAPACK_USER=/usr/lib/lapack/liblapack.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-11.2/ -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DGMX_GPU=CUDA
@@ -128,14 +110,5 @@ cmake .. -DGMX_GPU=CUDA -DGMX_BUILD_OWN_FFTW=ON -DGMX_BLAS_USER=/usr/local/lib/l
 
 make check # not make test!!!
 
-# Isopeptide: specbond.dat, residuetypes.dat
-
-"""
-Manual install
-* Download CUDA including the driver
-* Boot to terminal mode CTRL ALT F1
-"""
-sudo apt purge *nvidia*
-sudo apt-get install gcc-10 g++-10
-chmod +x ./cuda...
-./cuda...run # under options choose that the system config is updated to use NVIDIA driver
+# Install additional force fields, bonds, etc.
+# e.g. isopeptide: specbond.dat, residuetypes.dat
