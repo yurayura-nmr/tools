@@ -33,7 +33,7 @@ def readFile(filename):
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-vectors = readFile("output.txt")
+vectors = readFile("paxis_output.txt")
 
 """
 Start and end FRAME
