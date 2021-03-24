@@ -79,14 +79,21 @@ chmod +x run ...
 
 # 7. GROMACS
 """
-If the system is very old, get somewhat new compilers (whichever GROMACS) tells us to.
+Gromacs wants somewhat new, but CUDA wants somewhat old C and C++ compilers.
 Then we need to rewrite the host_config header so that the compile works.
 """
 sudo apt-get install gcc-7 g++-7
 sudo apt-get install vim
-vi /usr/local/cuda-9.1/include/crt/host_config.h # change
 
-...
+vi /usr/local/cuda-9.1/include/crt/host_config.h # change this file to work around it. GNU 7 compilers will just do fine.
+
+# Comment out like this, i.e. leave everything as it is and just skip the error.
+#if __GNUC__ > 6
+//#error -- unsupported GNU version! gcc versions later than 6 are not supported!
+#endif /* __GNUC__ > 6 */
+
+cmake .. -DGMX_GPU=CUDA -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.a
+
 
 
 sudo apt-get install Hwloc
