@@ -77,8 +77,14 @@ wget ...
 chmod +x run ...
 ./run... -override # need to override otherwise, the installer always complains about the compiler
 
-
-
+# 7. GROMACS
+"""
+If the system is very old, get somewhat new compilers (whichever GROMACS) tells us to.
+Then we need to rewrite the host_config header so that the compile works.
+"""
+sudo apt-get install gcc-7 g++-7
+sudo apt-get install vim
+vi /usr/local/cuda-9.1/include/crt/host_config.h # change
 
 ...
 
