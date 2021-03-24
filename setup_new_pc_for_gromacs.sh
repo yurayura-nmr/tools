@@ -104,11 +104,5 @@ make -j4
 make check
 sudo make install
 
-# chihiro: cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_BLAS_USER=/usr/lib/x86_64-linux-gnu/libblas.so -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_LAPACK_USER=/usr/lib/x86_64-linux-gnu/liblapack.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10.2/ -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DGMX_GPU=CUDA
-# mayuta : cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_BLAS_USER=/usr/lib/libblas.so -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_LAPACK_USER=/usr/lib/lapack/liblapack.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-11.2/ -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DGMX_GPU=CUDA
-# fubuki : cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_BLAS_USER=/usr/lib/libblas.so -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_LAPACK_USER=/usr/lib/liblapack.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-11.2/ -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DGMX_GPU=CUDA
-
-make check # not make test!!!
-
 # Install additional force fields, bonds, etc.
 # e.g. isopeptide: specbond.dat, residuetypes.dat
