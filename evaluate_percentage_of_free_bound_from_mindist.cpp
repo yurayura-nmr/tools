@@ -4,27 +4,22 @@
 
 /*
 
-2021/3/5
-
 Erik Walinda
 Kyoto University
 Graduate School of Medicine
 
-Read gromacs mindist output xvg file and report the fraction of time bound
-
-Last update:
-2021/3/8  Command line input
-          Can be compiled with nvcc
+Read gromacs gmx mindist output distance xvg file and report the fraction of that group 1 was bound to group 2.
+Cut-off distance 0.6 nm.
 
 */
 
 using namespace std;
 
 int process (char *filename) {
-    // Open the File 
+    // Open the gromacs-created xvg file. 
     ifstream in(filename);
 
-    // We want to read time and distance from gromacs output
+    // We want to read time t and distance x(t) from gromacs output
     float time, distance;
     
     // Count the number of dt time steps in the output file 
@@ -33,18 +28,17 @@ int process (char *filename) {
     bound = 0;
     unbound = 0;
 
-    // A query string
     string qlline; // query line to check and skip the gromacs header 
 
     while (!in.eof())
         while (getline(in, qlline)) {
         if (qlline.find("#") == 0) {
-            // Skip header
+            // Skip header lines starting with #
             cout << "(Skipping line): " << qlline << endl;
         }
 
         else if (qlline.find("@") == 0) {
-            // Skip header
+            // Skip header lines starting with @
             cout << "(Skipping line): " << qlline << endl;
         }
 
@@ -56,10 +50,8 @@ int process (char *filename) {
             // Count the number of dt frames
             timeStep++;
 
-            // Check if binding occurred
-            // Otherwise report non-bound
-            // Cutoff at 6 nm for now
-            if (distance < 0.6) {
+            // Check if binding occurred. Otherwise not bound. Cutoff at 0.6 nm for now.
+            if (distance <= 0.6) {
                 bound++;
             }
             else if (distance > 0.6) {
@@ -72,14 +64,13 @@ int process (char *filename) {
     float boundTime;
     float unboundTime;
 
-    boundTime = float(bound) / float(timeStep);
+    boundTime   = float(bound)   / float(timeStep);
     unboundTime = float(unbound) / float(timeStep);
     
     cout << "[Fraction of time bound:   ] " << boundTime << endl;
     cout << "[Fraction of time unbound: ] " << unboundTime << endl;
 
     in.close();
-
     return 0;
 }
 
