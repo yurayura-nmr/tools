@@ -31,7 +31,8 @@ Also easiest via the Mint/Ubuntu GUI.
 Go to network connection > properties > IPv4 > set IP
 IP:      choose
 Netmask: 255.255.255.0
-Gateway: use whatever was there before
+Gateway: 
+Reboot and make sure it worked. Sometimes it can disconnect everything.
 """
 
 # 3. CMAKE
@@ -83,7 +84,8 @@ Gromacs wants somewhat new, but CUDA wants somewhat old C and C++ compilers.
 Then we need to rewrite the host_config header so that the compile works.
 """
 sudo apt-get install libhwloc-dev
-sudo apt-get install openmpi-bin libopenmpi-dev
+sudo apt-get install libomp-dev
+#sudo apt-get install openmpi-bin libopenmpi-dev
 sudo apt-get install gcc-7 g++-7
 sudo apt-get install vim
 
@@ -101,7 +103,7 @@ was CUDA found? If not, specify with: -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-7.
 was fftw3 found?
 were blas and lapack found?
 """
-cmake .. -DGMX_GPU=CUDA -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.a
+cmake .. -DGMX_GPU=CUDA -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.so -DGMX_LAPACK_USER=/usr/local/lib/liblapack.so 
 make -j4
 make check          # all tests must pass. Otherwise trouble with install or hardware. Can fall back on older gromacs.
 ./bin/gmx --version # verify that CUDA was recognized during the build
