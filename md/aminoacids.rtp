@@ -1,0 +1,102 @@
+[ GLQ ]
+ [ atoms ]
+     N    N           -0.41570     1
+     H    H            0.27190     2
+    CA    CT          -0.02520     3
+   HA1    H1           0.06980     4
+   HA2    H1           0.06980     5
+     C    C            0.59730     6
+     O    O           -0.56790     7
+ [ bonds ]
+     N     H
+     N    CA
+    CA   HA1
+    CA   HA2
+    CA     C
+     C     O
+    -C     N
+ [ impropers ]
+    -C    CA     N     H
+    CA    +N     C     O
+
+[ LYQ ]
+ [ atoms ]
+     N    N           -0.41570     1
+     H    H            0.27190     2
+    CA    CT          -0.07206     3
+    HA    H1           0.09940     4
+    CB    CT          -0.04845     5
+   HB1    HC           0.03400     6
+   HB2    HC           0.03400     7
+    CG    CT           0.06612     8
+   HG1    HC           0.01041     9
+   HG2    HC           0.01041    10
+    CD    CT          -0.03768    11
+   HD1    HC           0.01155    12
+   HD2    HC           0.01155    13
+    CE    CT           0.32604    14
+   HE1    HP          -0.03358    15
+   HE2    HP          -0.03358    16
+    NZ    N 	      -0.64977    17
+    HZ    H            0.38604    18
+     C    C            0.59730    19
+     O    O           -0.56790    20
+ [ bonds ]
+     N     H
+     N    CA
+    CA    HA
+    CA    CB
+    CA     C
+    CB   HB1
+    CB   HB2
+    CB    CG
+    CG   HG1
+    CG   HG2
+    CG    CD
+    CD   HD1
+    CD   HD2
+    CD    CE
+    CE   HE1
+    CE   HE2
+    CE    NZ
+    NZ    HZ
+     C     O
+    -C     N
+ [ impropers ]
+    -C    CA     N     H
+    CA    +N     C     O
+ 
+[SEP]
+ [ atoms ]
+     N    N           -0.49370     1
+     H    H            0.30180     2
+     CA   CT          -0.23800     3
+     HA   H1           0.09370     4
+     CB   CT           0.07820     5
+     HB1  H1          -0.06020     6
+     HB2  H1          -0.06020     7
+     OG   OS          -0.55930     8
+     PS   P            1.40000     9
+     OPA  O2          -0.85000    10
+     OPB  O2          -0.85000    11
+     OPC  O2          -0.85000    12
+     C    C            0.67310    13
+     O    O           -0.58540    14
+ [ bonds ]
+     N     H
+     N    CA
+    CA    HA
+    CA    CB
+    CA     C
+    CB   HB1
+    CB   HB2
+    CB    OG
+    OG    PS
+    PS   OPA
+    PS   OPB
+    PS   OPC
+     C     O
+    -C     N                            ; was missing
+ [ impropers ]                          ; copied from SER
+    -C    CA     N     H
+    CA    +N     C     O
