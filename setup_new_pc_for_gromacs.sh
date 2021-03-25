@@ -13,6 +13,7 @@ A list of commands. Not to be run as a single script.
 """
 Hardest part is to properly install the NVIDIA driver.
 So it is best to get this out of the way first.
+Next time, let's try Pop! OS or another distro with NVIDIA drivers preinstalled.
 
 Easiest using the Mint GUI called Driver Manager.
 GUI > Driver Manager > Set to nvidia and hope it works. 
