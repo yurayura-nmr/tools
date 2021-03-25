@@ -24,6 +24,12 @@ sudo apt-get install nvidia-driver-390  # 390 works best. Newer drivers cause pr
 sudo reboot                             # Necessary
 nvidia-smi                              # Driver reccognizes GPU correctly? Even after reboot?
 
+# Or...
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update
+
+
+
 # 2. Set static IP
 sudo apt-get install ssh
 """
@@ -71,8 +77,18 @@ sudo make install # note where the libraries are installed; this will be importa
 # 6. CUDA
 """
 Get CUDA drivers from NVIDIA.
-Make sure that the CUDA version is compatible with whatever driver we get to work.
-e.g. nvidia-390 supports CUDA 9.1 but not CUDA 11, etc.
+
+* Make sure that the CUDA version is compatible with whatever driver we get to work.
+  e.g. nvidia-390 supports CUDA 9.1 but not CUDA 11, etc.
+  
+* Moreover, the CUDA version must be compatible with the gcc version.
+  https://stackoverflow.com/questions/6622454/cuda-incompatible-with-my-gcc-version
+  
+* CUDA will sometimes complain that the driver is too old for current CUDA.
+  Newer drivers are great but sometimes they cause installation trouble.
+  As stated here, we may want to take the older driver and ignore the CUDA installer's
+  claim that CUDA won't work. In fact, it does work with older drivers.
+  https://www.pyimagesearch.com/2019/12/09/how-to-install-tensorflow-2-0-on-ubuntu/
 """
 wget ...
 chmod +x run ...
@@ -83,6 +99,7 @@ chmod +x run ...
 Gromacs wants somewhat new, but CUDA wants somewhat old C and C++ compilers.
 Then we need to rewrite the host_config header so that the compile works.
 """
+sudo apt-get install build-essential
 sudo apt-get install libhwloc-dev
 sudo apt-get install libomp-dev
 #sudo apt-get install openmpi-bin libopenmpi-dev
@@ -103,7 +120,8 @@ was CUDA found? If not, specify with: -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-7.
 was fftw3 found?
 were blas and lapack found?
 """
-cmake .. -DGMX_GPU=CUDA -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.so -DGMX_LAPACK_USER=/usr/local/lib/liblapack.so 
+cmake .. -DGMX_GPU=CUDA -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.so -DGMX_LAPACK_USER=/usr/local/lib/liblapack.so -DGMX_OPENMP=ON -DGMX_MPI=OFF -DGMX_THREAD_MPI=ON
+
 make -j4
 make check          # all tests must pass. Otherwise trouble with install or hardware. Can fall back on older gromacs.
 ./bin/gmx --version # verify that CUDA was recognized during the build
