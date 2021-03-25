@@ -127,5 +127,8 @@ make check          # all tests must pass. Otherwise trouble with install or har
 ./bin/gmx --version # verify that CUDA was recognized during the build
 sudo make install
 
+# Add to .bashrc etc.
+source /usr/local/gromacs/bin/GMXRC.bash
+
 # Install additional force fields, bonds, etc.
 # e.g. isopeptide: specbond.dat, residuetypes.dat
