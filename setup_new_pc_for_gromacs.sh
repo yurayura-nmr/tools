@@ -13,6 +13,10 @@ A list of commands. Not to be run as a single script.
 """
 Hardest part is to properly install the NVIDIA driver.
 So it is best to get this out of the way first.
+
+BEST WAY IS TO USE A DISTRIBUTION THAT HAS NVIDIA DRIVER AND CUDA PREINSTALLED
+e.g. Pop! OS (use etcher to burn to USB. UNetboot thingy caused errors during install)
+
 Next time, let's try Pop! OS or another distro with NVIDIA drivers preinstalled.
 
 Easiest using the Mint GUI called Driver Manager.
@@ -25,9 +29,10 @@ sudo apt-get install nvidia-driver-390  # 390 works best. Newer drivers cause pr
 sudo reboot                             # Necessary
 nvidia-smi                              # Driver reccognizes GPU correctly? Even after reboot?
 
-# Or...
+# Or... (this sometimes but not often worked for me)
 sudo add-apt-repository ppa:graphics-drivers/ppa
 sudo apt-get update
+sudo apt-get install nvidia-driver-...
 
 
 
@@ -46,8 +51,8 @@ Reboot and make sure it worked. Sometimes it can disconnect everything.
 # Get newest version and build from source: https://cmake.org/download/
 sudo apt-get install libssl-dev
 
-wget ...
-tar xvf ...
+wget https://github.com/Kitware/CMake/releases/download/v3.20.0/cmake-3.20.0.tar.gz
+tar xvf cmake-3.20.0.tar.gz
 ./configure
 
 make -j4
@@ -55,10 +60,8 @@ sudo make install
 
 # 4. FFTW
 # Get newest version and build from source: http://www.fftw.org/download.html
-sudo apt-get install gfortran
-
-wget ...
-tar xvf ...
+wget http://www.fftw.org/fftw-3.3.9.tar.gz
+tar xvf fftw-3.3.9.tar.gz
 ./configure --enable-static --enable-shared --enable-sse2 --enable-avx --enable-avx2  --enable-float
 
 make -j4
@@ -66,10 +69,11 @@ sudo make install
 
 # 5. LAPACK (includes BLAS)
 # Get source
-wget ..
-tar xvf ...
+wget https://github.com/Reference-LAPACK/lapack/archive/v3.9.0.tar.gz
+tar xvf v3.9.0.tar.gz
 mkdir testbuild
 cd testbuild
+sudo apt-get install gfortran
 cmake .. -DBUILD_SHARED_LIBS=ON # required to get libblas.so and liblapack.so
 make -j4
 
@@ -96,6 +100,10 @@ Get CUDA drivers from NVIDIA.
 wget ...
 chmod +x run ...
 ./run... -override # need to override otherwise, the installer always complains about the compiler
+
+# Pop! OS is easier!
+# https://support.system76.com/articles/cuda/
+sudo apt install system76-cuda-latest
 
 # 7. GROMACS part 1
 """
