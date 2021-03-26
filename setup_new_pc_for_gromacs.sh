@@ -12,12 +12,11 @@ A list of commands. Not to be run as a single script.
 # 1. NVIDIA driver 
 """
 Hardest part is to properly install the NVIDIA driver.
-Luckily, this is easy in Pop! OS.
+Luckily, the driver is already inculded in Pop! OS.
 Download image and use etcher to burn to USB. 
 (UNetboot thingy caused errors during install).
 """
 nvidia-smi   # Driver reccognizes GPU correctly?
-
 
 # 2. Set static IP
 sudo apt-get install ssh
