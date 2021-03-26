@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 
-# 2016/03/12
-#     Arurun
-#     Prepare di-ubiquitin trajectory for pymol viewing
-#     by adding chain labels to the pdb file
-
+# Prepare di-ubiquitin trajectory for pymol viewing
+# by adding chain labels to the pdb file
 
 ################################################################
-
 
 def inBoundary(boundary, atomNumber):
     if atomNumber >= boundary[0]:
@@ -16,17 +12,13 @@ def inBoundary(boundary, atomNumber):
     else:
         return False
 
-
 ################################################################
-
 
 def attachLabel(line, label):
     labeledLine = line[:21] + label + line[22:]
     return labeledLine
 
-
 ################################################################
-
 
 def parsePDB(boundaryDistal, boundaryProximal, filename):
     filenameLabeled = filename + '_labeled.pdb'
@@ -46,7 +38,6 @@ def parsePDB(boundaryDistal, boundaryProximal, filename):
                 else:
                     fout.write(line)
 
-
 ################################################################
 
 # Setup
@@ -54,8 +45,6 @@ def parsePDB(boundaryDistal, boundaryProximal, filename):
 distal = [1, 1229]
 proximal = [1230, 2458]
 
-filename = './average.pdb'
-
+filename = './in.pdb'
 
 parsePDB(distal, proximal, filename)
-
