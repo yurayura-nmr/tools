@@ -103,6 +103,7 @@ tar xvf ...
 mkdir testbuild
 cd testbuild
 cmake .. -DGMX_GPU=CUDA -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 -DREGRESSIONTEST_DOWNLOAD=ON -DGMX_BLAS_USER=/usr/local/lib/libblas.so -DGMX_LAPACK_USER=/usr/local/lib/liblapack.so -DGMX_OPENMP=ON -DGMX_MPI=OFF -DGMX_THREAD_MPI=ON -DCUDA_TOOLKIT_ROOT_DIR=/usr/lib/cuda-11.2
+# -DGMX_USE_RDTSCP=ON # Sometimes gmx mdrun suggests this depending on architecture / simulation setup
 
 make -j4
 make check -j4      # all tests must pass. Otherwise trouble with install or hardware. Might be better to fall back on older gromacs if they work.
