@@ -1,0 +1,9 @@
+#include "martini_v2.1-dna.itp"
+#include "ATP.itp"
+#include "martini_ions.itp"
+
+[ system ]
+ATP MICELLE SELF-ASSEMBLY
+
+[ molecules ]
+ATP 128
