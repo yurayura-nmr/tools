@@ -4,6 +4,7 @@ https://towardsdatascience.com/deep-learning-based-super-resolution-with-opencv-
 
 Compile using the cmake option : -DOPENCV_GENERATE_PKGCONFIG=ON
 Then, the LD flags are given by: pkg-config --cflags --libs opencv4
+Credit for this goes to: https://stackoverflow.com/questions/15320267/package-opencv-was-not-found-in-the-pkg-config-search-path
 
 For example, on my Ubuntu:
 g++ test.cpp -std=c++11 -I/usr/local/include/opencv4 -L/usr/local/lib -lopencv_gapi -lopencv_stitching -lopencv_alphamat -lopencv_aruco -lopencv_bgsegm -lop
