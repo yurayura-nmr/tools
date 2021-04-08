@@ -13,6 +13,7 @@ ow -lopencv_surface_matching -lopencv_tracking -lopencv_highgui -lopencv_dataset
 lopencv_shape -lopencv_ml -lopencv_ximgproc -lopencv_video -lopencv_dnn -lopencv_xobjdetect -lopencv_objdetect -lopencv_calib3d -lopencv_imgcodecs -lopencv_features2d -lopencv_flann -lopencv_xphoto -lopen
 cv_photo -lopencv_imgproc -lopencv_core
 
+Pretrained model from: https://github.com/Saafke/EDSR_Tensorflow/blob/master/models/EDSR_x4.pb
 */
 
 #include <opencv2/dnn_superres.hpp>
