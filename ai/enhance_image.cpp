@@ -6,6 +6,9 @@ Compile using the cmake option : -DOPENCV_GENERATE_PKGCONFIG=ON
 Then, the LD flags are given by: pkg-config --cflags --libs opencv4
 Credit for this goes to: https://stackoverflow.com/questions/15320267/package-opencv-was-not-found-in-the-pkg-config-search-path
 
+Compile using the cmake option : -DOPENCV_GENERATE_PKGCONFIG=ON
+Then, the LD flags are given by: pkg-config --cflags --libs opencv4
+
 For example, on my Ubuntu:
 g++ test.cpp -std=c++11 -I/usr/local/include/opencv4 -L/usr/local/lib -lopencv_gapi -lopencv_stitching -lopencv_alphamat -lopencv_aruco -lopencv_bgsegm -lop
 encv_bioinspired -lopencv_ccalib -lopencv_dnn_objdetect -lopencv_dnn_superres -lopencv_dpm -lopencv_face -lopencv_fuzzy -lopencv_hdf -lopencv_hfs -lopencv_img_hash -lopencv_intensity_transform -lopencv_li
