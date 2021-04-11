@@ -9,6 +9,12 @@ Otherwise, the code will fail silently (just not opening the video).
 Does not need special -D ... options, just make sure these packages are installed before running cmake:
 
 libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavresample-dev
+
+To restore audio stream:
+1. copy audio from original file
+   ffmpeg -i yuhi.mp4 -vn -acodec copy yuhi.aac
+2. merge them after upscaling
+   ffmpeg -i yuhi_hq.mp4 -i yuhi.aac -map 0:0 -map 1:0 -c:v copy -c:a copy yuhi_hq_test1.mp4
 */
 
 #include <iostream>
