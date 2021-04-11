@@ -16,16 +16,22 @@ To restore audio stream:
 2. merge them after upscaling
    ffmpeg -i yuhi_hq.mp4 -i yuhi.aac -map 0:0 -map 1:0 -c:v copy -c:a copy yuhi_hq_test1.mp4
 */
-
-#include <iostream>
-#include <opencv2/dnn_superres.hpp>
+// This file is part of OpenCV project.
+// It is subject to the license terms in the LICENSE file found in the top-level directory
+// of this distribution and at http://opencv.org/license.html.
  
+#include <iostream>
+#include <iomanip>
+
+#include <opencv2/dnn_superres.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
  
 using namespace std;
 using namespace cv;
 using namespace dnn_superres;
+
+//#define QUICK_CHECK
  
 int main(int argc, char *argv[])
 {
@@ -35,16 +41,27 @@ int main(int argc, char *argv[])
   int scale;
   string path;
 
-  input_path = "./yuhi.mp4";
-  output_path = "./yuhi_hq.mp4";
+  //input_path = "./aitakatta.mp4";
+  //output_path = "./aitakatta_hq.mp4";
  
+   
   // Make sure model and scale match algorithm.
   //algorithm = "edsr";
-  algorithm = "espcn";
+  //algorithm = "espcn";
+  //algorithm = "lapsrn";
+  algorithm = "fsrcnn";
+
+  //path = "EDSR_x4.pb";
   //path = "ESPCN_x4.pb"; 
-  path = "ESPCN_x2.pb";
-  //scale = 4;
-  scale = 2;
+  //path = "ESPCN_x2.pb";
+  //path = "LapSRN_x8.pb";
+  //path = "LapSRN_x4.pb";  
+  path = "FSRCNN_x4.pb";
+
+  scale = 4;
+
+  input_path = "./yuhi.mp4";
+  output_path = "./yuhi_" + algorithm + to_string(scale) + ".mp4";
 
   VideoCapture input_video(input_path);
   int ex = static_cast<int>(input_video.get(CAP_PROP_FOURCC));
@@ -64,30 +81,41 @@ int main(int argc, char *argv[])
   sr.readModel(path);
   sr.setModel(algorithm, scale);
 
-  int counter;
+  int counter, totalFrames;
   counter = 0;
+  
+  totalFrames = input_video.get(CAP_PROP_FRAME_COUNT);
+  cout << "Total frames: " << totalFrames << endl;
+
   for(;;)
   {
      Mat frame;
-     counter++;
-     cout << "[ Frame ] " << counter << endl;
-
      Mat output_frame;
-       
+
+     counter++;
+
+     cout << "[\033[1;32m Frame \033[0m] " << to_string(counter)
+          << setw(9) << " (" <<  (100 * counter / totalFrames) << " "
+          << setw(3) << " % done)" << endl;
+      
      input_video >> frame;
-     // Skip if frame empty or to end the loop
+
+     // End loop
      if ( frame.empty() )
           break;
+
      sr.upsample(frame, output_frame);
      output_video << output_frame;
-     // Output won't work in Windows Ubuntu
-     //namedWindow("Upsampled video", WINDOW_AUTOSIZE);
-     //imshow("Upsampled video", output_frame);
-     //namedWindow("Original video", WINDOW_AUTOSIZE);
-     //imshow("Original video", frame);
+
+    // Quick check for testing
+    #ifdef QUICK_CHECK
+    if ( counter == 10)
+          break;
+    #endif
   }
+
   input_video.release();
   output_video.release();     
- 
+
   return 0;
 }
