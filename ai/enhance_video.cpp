@@ -10,6 +10,9 @@ Does not need special -D ... options, just make sure these packages are installe
 
 libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavresample-dev
 
+To build using CUDA:
+https://gist.github.com/Saafke/3e53662286ac3254d34b1d6b9e5b1604
+
 To restore audio stream:
 1. copy audio from original file
    ffmpeg -i yuhi.mp4 -vn -acodec copy yuhi.aac
