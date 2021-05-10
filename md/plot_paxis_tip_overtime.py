@@ -6,10 +6,10 @@ Erik Walinda
 Kyoto University
 Graduate School of Medicine
 
-Last update: 2021/4/27
+Last update: 2021/5/10
 * Rewrote c=object part of the ax.scatter
 * Thus, finally compatible with Python 3.8.5
-* Tested with matplotlib version 3.3.4
+* Tested with matplotlib version 3.3.4, 3.3.2
 
 """
 import matplotlib
