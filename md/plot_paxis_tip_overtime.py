@@ -66,6 +66,7 @@ for i in range(nColors):
     # Get color as integer value
     color = [cmap(float(i) / nColors)]  # The use of [] here is a workaround since ax.scatter expects an array, not an integer.
     cax = ax.scatter(vec[0], vec[1], vec[2], '-o', cmap=cmap, c=color, vmin=0, vmax=nColors, edgecolors='none')
+    #cax = ax.scatter(vec[0], vec[1], vec[2], '-o', cmap=cmap, c=color, vmin=0, vmax=nColors) # matplotlib 3.4.2 can create an error when using edgecolors
 
 ax.set_xlim([-1, 1])
 ax.set_ylim([-1, 1])
