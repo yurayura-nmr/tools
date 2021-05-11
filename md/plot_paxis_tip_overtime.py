@@ -10,7 +10,6 @@ Last update: 2021/5/10
 * Rewrote c=object part of the ax.scatter
 * Thus, finally compatible with Python 3.8.5
 * Tested with matplotlib version 3.3.4, 3.3.2
-
 """
 import matplotlib
 matplotlib.use('Agg')  # Force matplotlib to not use any Xwindows backend.
@@ -66,7 +65,7 @@ for i in range(nColors):
     # Get color as integer value
     color = [cmap(float(i) / nColors)]  # The use of [] here is a workaround since ax.scatter expects an array, not an integer.
     cax = ax.scatter(vec[0], vec[1], vec[2], '-o', cmap=cmap, c=color, vmin=0, vmax=nColors, edgecolors='none')
-    #cax = ax.scatter(vec[0], vec[1], vec[2], '-o', cmap=cmap, c=color, vmin=0, vmax=nColors) # matplotlib 3.4.2 can create an error when using edgecolors
+    #cax = ax.scatter(vec[0], vec[1], vec[2], '-o', cmap=cmap, c=color, vmin=0, vmax=nColors) # matplotlib 3.4.2 can throw an error when using edgecolors
 
 ax.set_xlim([-1, 1])
 ax.set_ylim([-1, 1])
