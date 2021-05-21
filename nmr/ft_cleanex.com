@@ -1,4 +1,4 @@
-#!/bin/csh
+#!/bin/tcsh
 
 setenv FILE $argv[1]
 
