@@ -1,4 +1,4 @@
-#!/bin/csh
+#!/bin/tcsh
 
 bruk2pipe -in ./ser \
   -bad 0.0 -aswap -DMX -decim 2040 -dspfvs 20 -grpdly 67.9862060546875  \
