@@ -9,6 +9,7 @@ import numpy as np
 x = np.arange(0.001, 5, 0.01)
 
 # Setting y(x)
+# Overlaying four different functions of x with names y1, y2, y3, y4 for the different y(x)
 y1 = x      
 y2 = -x + 3 
 y3 = 3 - (1 / x) 
