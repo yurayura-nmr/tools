@@ -12,6 +12,9 @@ Graduate School of Medicine
 Read APBS 1.3 potential (kT/e) files and compute difference map.
 Manually remove header and footer lines and keep only numbers for processing.
 
+Example: ./deltaEpot pH5.dx pH6.dx
+Suggestion: avoid confusion by putting lower pH first always.
+
 */
 
 using namespace std;
