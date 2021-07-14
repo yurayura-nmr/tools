@@ -4,7 +4,7 @@ Erik Walinda
 
 chika_paxis.py
 
-Get signed principal axis (1)
+Get ==signed== principal axis (1)
 
 For Protein - calculate ourselves
 For DNA - get paxis from gromacs and just check orientation
@@ -67,6 +67,5 @@ if CROSS < 0:
     major_axis_1 = - major_axis_1
 elif CROSS > 0:
     major_axis_1 = major_axis_1
-
 
 print major_axis_1[0], " ", major_axis_1[1], " ", major_axis_1[2]
