@@ -19,3 +19,6 @@ basicFT2.com -pseudo3D -in fid/test%03d.fid -out ft/test%03d.ft2 -xP0 88 -yP0 -9
 
 chmod +x nmr.com
 ./nmr.com
+
+# From: https://groups.io/g/nmrpipe/topic/71773980?p=Created,,,20,2,0,0
+# Currently ultralow resolution for setup only.
