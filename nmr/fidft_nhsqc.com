@@ -24,7 +24,7 @@ nmrPipe -in nhsqc.fid \
 | nmrPipe -fn FT -verb                                      \
 | nmrPipe -fn PS -p0 0 -p1 0 -di                            \
 | nmrPipe -fn TP                                            \
-#| nmrPipe -fn LP -auto                                     \
+#| nmrPipe -fn LP -auto                                      \
 #| nmrPipe -fn SP -c 0.5 -off 0.5 -end 1 -pow 1 -size 64     \
 | nmrPipe -fn SP -c 0.5 -off 0.5 -end 1 -pow 1              \
 | nmrPipe -fn ZF -size 1024                                 \
@@ -33,5 +33,6 @@ nmrPipe -in nhsqc.fid \
 | nmrPipe -fn POLY -auto -ord 0                             \
 | nmrPipe -fn TP                                            \
 | nmrPipe -fn POLY -auto -ord 0                             \
-| nmrPipe  -fn EXT -left -sw                                \
+#| nmrPipe -fn EXT -left -sw                                 \
+| nmrPipe -fn EXT -x1 10.0ppm -xn 6.0ppm -sw                \
 | nmrPipe -out nhsqc.ft2 -ov
