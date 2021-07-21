@@ -16,13 +16,14 @@ Last change: 2021/03/23
     1. Record 1D spectrum of DSS in the same buffer (external)
        or the actual protein sample (internal) standard
        using 1D pulse with water suppression (e.g., p3919fpgp).
-    2. Process the 1D in NMR draw and note the frequency of
-       the DSS methyl resonance line (sharp peak around 0 ppm)
+    2. Process the 1D in nmrPipe/nmrDraw and note the observed 
+       frequency (in ppm) of the DSS methyl resonance line 
+       (the sharp peak around 0 ppm).
     3. Run this script in the folder containing the Bruker NMR 
-       data, i.e., the acqu, acqus files etc. 
-       When asked, plug in the DSS-methyl shift in ppm.
+       data, i.e., where the acqu, acqus files etc. are located.
+       When asked, plug in the observed DSS-methyl shift in ppm.
     4. The script will give you the new, referenced spectral
-       centers in ppm. Use these in your NMRPipe fid.com file 
+       centers in ppm. Use these in your nmrPipe fid.com file 
        and you will obtain properly referenced spectra.
 
     Note: This script assumes the 
