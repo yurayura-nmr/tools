@@ -24,11 +24,4 @@ sethdr ./ft/test%03d.ft2 -ndim 2
 
 # From: https://groups.io/g/nmrpipe/topic/71773980?p=Created,,,20,2,0,0
 # basicFT2.com is included in the 2020 version of NMRPipe
-# (not in older builds, so update if the script does not exist).
-
-# CCPN has trouble reading these data cause it thinks the ft2 files are 3D.
-# Can trick it into reading by making 2D projections of the 2D data... 
-# i.e.: proj3D.tcl -in test001.ft2 test_corrected_2D.ft2
-# or  : sethdr test001.ft2 -ndim 2
-#       showhdr test001.ft2
-# Dimensions should have decreased from 3 to 2 and CCPN should be able to open it now. 
+# It is not included in older builds, so update if the script does not exist.
