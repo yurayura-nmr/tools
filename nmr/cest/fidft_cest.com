@@ -2,8 +2,8 @@
 
 bruk2pipe -verb -in ./ser \
   -bad 0.0 -ext -aswap -AMX -decim 2376 -dspfvs 20 -grpdly 67.9872589111328  \
-  -xN              1024  -yN                30  -zN                 4  \
-  -xT               512  -yT                30  -zT                 2  \
+  -xN              1024  -yN                30  -zN               128  \
+  -xT               512  -yT                30  -zT                64  \
   -xMODE            DQD  -yMODE           Real  -zMODE  Echo-AntiEcho  \
   -xSW         8417.508  -ySW         7002.801  -zSW         2341.920  \
   -xOBS         700.183  -yOBS         700.183  -zOBS          70.957  \
@@ -21,7 +21,8 @@ chmod +x nmr.com
 ./nmr.com
 
 # From: https://groups.io/g/nmrpipe/topic/71773980?p=Created,,,20,2,0,0
-# Currently ultralow resolution for setup only.
+# basicFT2.com is included in the 2020 version of NMRPipe
+# (not in older builds, so update if the script does not exist).
 
 # CCPN has trouble reading these data cause it thinks the ft2 files are 3D.
 # Can trick it into reading by making 2D projections of the 2D data... 
