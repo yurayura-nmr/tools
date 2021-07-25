@@ -1,0 +1,6 @@
+1. Open all spectra.
+2. Make series (data analysis -> NMR series; Pulsing frequency)
+3. Enter all frequency offsets from fq3list. The first experiment is the reference.
+4. Pick a peak in the reference data only.
+5. Data analysis -> Follow intensity changes. 
+6. Group & Fit peaks -> Show Fit Graph
