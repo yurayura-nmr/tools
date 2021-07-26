@@ -1,0 +1,8 @@
+15N T2
+delay (s) = 0, 0.016, 0.032, 0.048, 0.064, 0.08, 0.096, 0.112, 0.144, 0, 0.048, 0.096
+d1 = 3s, ns = 8, ds = 8
+1024 x 512 x 12
+(NOTE) expt gives shorter experimental time by a factor of 0.9606?
+
+298 K
+SW 30 ppm
