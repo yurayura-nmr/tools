@@ -1,0 +1,22 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.2
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 452	$$ modification sequence number
+##ORIGIN= UXNMR, Bruker Analytische Messtechnik GmbH
+##OWNER= root
+$$ 2020-04-22 15:33:14.947 +0900  nmr@nmrpc
+$$ /opt/topspin3.0/data/erik/nmr/20200422_M1diUb_boundNZF2eq_ddConfirm/3/acqu2s
+$$ process /opt/topspin3.2pl6/prog/mod/go
+##$ACQT0= 0
+##$BF1= 70.948623
+##$FnMODE= 6
+##$NUC1= <15N>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 64
+##$O1= 8300.98889099418
+##$SFO1= 70.956923988891
+##$SW= 36.0067893763622
+##$SW_h= 2554.93101686254
+##$TD= 64
+##END=
