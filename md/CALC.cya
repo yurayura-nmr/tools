@@ -1,0 +1,13 @@
+randomseed  := 43472671
+nproc=4
+peaks       := N15NOESY,C13NOESY,C13NOEAR
+prot        := nzf
+tolerance   := 0.04,0.04,0.45
+constraints := nzf.lol,nzf.rdc,talos.aco
+weight_rdc  := 0.03                # weight for RDC restraints
+cut_rdc     := 0.2                 # cutoff for RDC violation output
+;opt_tensor  := 1                  # alignment tensor optimization
+structures  := 100,20              # number of start conformers
+steps       := 10000
+
+noeassign peaks=$peaks prot=$prot
