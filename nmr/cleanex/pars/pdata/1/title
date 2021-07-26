@@ -1,0 +1,4 @@
+CLEANEX-PM test 0.025s
+spinlock period = 0.4055ms x N
+eg.  100.1585 ms 5points
+Set 0 to d29 for measuring the reference spectrum
