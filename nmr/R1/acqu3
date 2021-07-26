@@ -1,0 +1,22 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.2
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 13	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ 2017-09-08 22:42:58.167 +0900  nmr@nmrpc
+$$ /opt/topspin3.0/data/erik/nmr/ATP_Syn_T1T2cexNOE/200/acqu3
+$$ process /opt/topspin3.2pl6/prog/mod/dataserver
+##$ACQT0= 0
+##$BF1= 700.18
+##$FnMODE= 1
+##$NUC1= <1H>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 0
+##$O1= 3290.846
+##$SFO1= 700.183290846
+##$SW= 10.0013827979057
+##$SW_h= 7002.80112044819
+##$TD= 11
+##END=
