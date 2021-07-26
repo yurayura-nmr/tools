@@ -1,0 +1,16 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.2
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= nmr
+$$ 2020-03-25 14:16:58.762 +0900  nmr@nmrpc
+$$ /opt/topspin3.0/data/m.nishizawa/nmr/n_R2rex_monoub/101/pdata/1/outd
+$$ process /opt/topspin3.2pl6/prog/mod/edparproc
+##$CURPLOT= <hpprinter>
+##$CURPRIN= <$hpprinter>
+##$DFORMAT= <normdp>
+##$LAYOUT= <+/1D_X.xwp>
+##$LFORMAT= <normlp>
+##$PFORMAT= <normpl>
+##END=
