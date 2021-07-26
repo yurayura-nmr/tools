@@ -1,0 +1,107 @@
+CONFIGURATION INFORMATION
+=========================
+
+Path         : /opt/topspin3.2pl6/conf/instr/spect/uxnmr.info
+Date         : Fri Jan 20 10:27:27 2017
+Release      : TOPSPIN Version 3.2-pl6
+Installed in : /opt/topspin3.2pl6
+Host         : nmrpc
+OS           : CentOS release 5.11 (Final)
+CPU          : Intel(R) Xeon(R) CPU W3520 @ 2.67GHz (4 cores at 1596 MHz)
+User         : nmr (NMR User)
+Description  : Avance-AV 700
+Location     : 
+System       : Avance-AV NMR spectrometer
+1H-frequency : 700.18 MHz
+Order Number : 
+Configured in: /opt/topspin3.2pl6/conf/instr/spect
+
+#--------------------
+#  FCU configuration:
+#--------------------
+board # 1 :
+	MEMORY 0x1ff000	(=511 k Words)
+	PAL-Version 0x104 = new version (EC level 07 or more)
+board # 2 :
+	MEMORY 0x1ff000	(=511 k Words)
+	PAL-Version 0x104 = new version (EC level 07 or more)
+board # 3 :
+	MEMORY 0x1ff000	(=511 k Words)
+	PAL-Version 0x104 = new version (EC level 07 or more)
+board # 4 :
+	MEMORY 0x1ff000	(=511 k Words)
+	PAL-Version 0x104 = new version (EC level 07 or more)
+
+DRU: AQS DRU-E Z102520/00148 ECL 01.00
+- TCP/IP address = 149.236.99.89
+- Firmware Version = 140519
+
+Gcu: GCU3_SlowIF
+
+AQS: connected to spect:/dev/tty10
+  _Slot_ SBSB _____________________Board_____________________
+  Number Addr Type HW-VS FW-VS ID  ECL Name   Description
+  -----------------------------------------------------------
+     2   0x10 0x52   0x3    AW  R  2.0 REC-1  AQS RXAD1000 Z102118/39 ECL 02.00
+     3   0x34 0xc1   0x1        X  0.4 REF-1  REF-1000 Reference Board for AQS Receiver
+     4   0x24 0x28   0x4    BH  S  6.0 SGU-1  AQS SGU1000 Z003330/01176 ECL 6.0
+     5   0x25 0x28   0x4    BH  S  6.0 SGU-2  AQS SGU1000 Z003330/01045 ECL 6.0
+     6   0x26 0x28   0x4    BH  S  6.0 SGU-3  AQS SGU1000 Z003330/01178 ECL 6.0
+     7   0x27 0x28   0x4    BH  S  6.0 SGU-4  AQS SGU1000 Z003330/01120 ECL 6.0
+     8   0x3c  0x4     0        Y  1.0 ROUT-1 Avance Router 3/5
+     9   0x3d  0x4     0        Y  1.0 ROUT-2 Avance Router 3/5
+    21   0x21  0xa     0        P  2.0 PSD-1  Power Supply Distribution Board
+    25   0x20  0x7     0        B      MASTER AQS Rack Master
+  Logical Receiver/SGU configuration:
+
+
+Router: 2 Avance-Routers
+
+Amplifier Control Board:  connected to spect:/dev/tty20
+
+
+Amplifiers (ACB configuration):
+  RO  Amplifier  Module  Nucleus  Power/W  Switchbox Name PN/SN/FW
+   1      1         1        X      500    N  (V=ff) BLAXH2H 500/100/250 W1345081/8/20050420
+   2      1         2       1H      100    N  (-""-) BLAXH2H 500/100/250 W1345081/8/20050420
+   3      1         3       2H      250    N         BLAXH2H 500/100/250 W1345081/8/20050420
+   6      2         1        X      500    N  (V=ff) BLAX 500 W1345070/393/20050420
+
+
+
+- Type: BSMS/1
+- absolute lockshift frequency = changed from 12525784 Hz to 12518107 Hz Hz
+- GAB type = GAB
+- GAB current limits = 0.0/X, 0.0/Y, 10.0/Z (in A)
+
+Cryo Controller CRCO: device connected to spect:/dev/tty09
+
+Lock: device connected to spect:/dev/tty03
+
+Eurotherm VTU: device connected to spect:/dev/tty05
+
+Preamplifiers :
+HPPR: - HPPR/2 preamplifier connected to spect:/dev/tty10
+    Type      : HPPR/2
+    Controller: Application firmware = AP
+                15 LEDs for tuning, 15 LEDs for matching
+    Module  1 : 1H LNA
+                 PN=Z003463, SN=00090 from 20050321
+    Module  2 : XBB19F 2HS
+                 PN=Z003507, SN=00106 from 20050426
+    Module  3 : 2H
+                 PN=Z003474, SN=00078 from 20050330
+    Module  4 : 13C
+                 PN=Z003525, SN=00052 from 20050525
+    Module  5 : 15N
+                 PN=Z003531, SN=00052 from 20050526
+
+
+Frequency generation:
+- F1: for SGU
+- F2: for SGU
+- F3: for SGU
+- F4: for SGU
+
+
+
