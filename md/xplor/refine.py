@@ -3,8 +3,14 @@ import sys
 """
 Command line to run this script:
 xplor -py refine.py
+
+Erik Walinda
+
+Script was originally written by CDS in 2005 for version 2.34, 
+but in my case some errors are thrown for me when working with Zn2+ ions and RDC pseudoatoms. 
+Therefore, it works better in version 3.3.
 """
-xplor.requireVersion("2.34")
+xplor.requireVersion("3.3")
 
 # Slow cooling protocol in torsion angle space for protein G. 
 # Uses NOE, RDC, J-coupling restraints.
@@ -13,17 +19,17 @@ xplor.requireVersion("2.34")
 
 (opts, args) = xplor.parseArguments(["quick"]) # check for command-line typos
 
-quick=False
+quick = False
 for opt in opts:
     if opt[0]=="quick":  #specify -quick to just test that the script runs
         quick=True
         pass
     pass
 
-numberOfStructures=5
+numberOfStructures = 100
 
 if quick:
-    numberOfStructures=3
+    numberOfStructures = 3
     pass
 
 # Protocol module has many high-level helper functions.
@@ -117,6 +123,7 @@ for (medium,expt,file,                 scale) in \
     rdc.setThreshold(1.5)       # in Hz
     rdcs.append(rdc)
     pass
+
 potList.append(rdcs)
 rampedParams.append( MultRamp(0.05,5.0, "rdcs.setScale( VALUE )") )
 
@@ -132,7 +139,7 @@ for medium in media.keys():
 noe = PotList('noe')
 potList.append(noe)
 from noePotTools import create_NOEPot
-for (name,scale,file) in [('all',1,"final.tbl"),
+for (name,scale,file) in [('all', 1, "final.tbl"),
                           #add entries for additional tables
                           ]:
     pot = create_NOEPot(name,file)
@@ -162,6 +169,7 @@ protocol.initTopology("ion.top")
 protocol.initParams("ion.par")
 
 """
+Adding Zn2+ atom to the 4 coordination cysteine residues. 
 Follow directions in the following patch:
 1, 2, 3, 4 are cysteine residues.
 5 is the zinc atom.
@@ -237,7 +245,7 @@ end
 
 xplor.command("write psf output=z4c.psf end")
 
-sys.exit()
+#sys.exit()
 
 # Gyration volume term 
 from gyrPotTools import create_GyrPot
