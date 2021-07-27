@@ -1,0 +1,56 @@
+xplor.command("""
+topology
+AUTO ANGLe=False DIHEdral=False END
+ 
+! patch to create Zn (Cys)4
+! 1 and 2 should be CYS
+! 3 and 4 should be CYS
+ presidue ZCH4
+ 
+  delete atom 1hg end
+  delete atom 2hg end
+  delete atom 3hg end
+  delete atom 4hg end
+ 
+!  add bond 5ZN+2 1sg
+!  add bond 5ZN+2 2sg
+!  add bond 5ZN+2 3sg
+!  add bond 5ZN+2 4sg
+
+ end
+!  add improper +HA1 +HA2 -SG +C  !stereo CA
+  
+end 
+end
+ 
+!add the PHO groups 
+segment
+ setup=true
+number=300
+ chain
+   sequence ZN2 end
+ end
+end
+ 
+ 
+!param
+!  bond  s zn+2 500.0 2.40 !FIX!
+!  bond  s zn+2 500.0 2.30      !FIX!
+!  bond  s zn+2 500.0 2.40  !FIX!
+!  bond  s zn+2 500.0 2.40 !FIX!
+!end
+ 
+ 
+!do patch
+ patch ZCH2 reference=1=(resid 13) 
+            reference=2=(resid 16) 
+            reference=3=(resid 27) 
+            reference=4=(resid 30)
+            reference=5=(resid 300) end
+
+ 
+ 
+""")
+ 
+ 
+xplor.command("write psf output=z4c.psf end")
