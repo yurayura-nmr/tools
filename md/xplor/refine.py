@@ -5,10 +5,13 @@ Command line to run this script:
 xplor -py refine.py
 
 Erik Walinda
+2021/07/27
 
 Script was originally written by CDS in 2005 for version 2.34, 
 but in my case some errors are thrown for me when working with Zn2+ ions and RDC pseudoatoms. 
 Therefore, it works better in version 3.3.
+
+Current workdir: ~/.../~/aru_rikai_20210727
 """
 xplor.requireVersion("3.3")
 
