@@ -235,9 +235,12 @@ end
  
 """)
 
-sys.exit()
- 
+
 xplor.command("write psf output=z4c.psf end")
+xplor.command("write pdb output=z4c.pdb end")
+
+sys.exit()
+
 
 #import protocol
 #protocol.genExtendedStructure()
