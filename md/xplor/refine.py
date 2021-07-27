@@ -247,12 +247,12 @@ potList.append(gyr)
 rampedParams.append( MultRamp(.002, 1, "gyr.setScale(VALUE)") )
 
 # hbda - distance/angle bb hbond term
-#
 #protocol.initHBDA('hbda.tbl')
 #potList.append( XplorPot('HBDA') )
 
 # hbdb - knowledge-based backbone hydrogen bond term
-protocol.initHBDB()
+#protocol.initHBDB()
+protocol.initHBDB("resid 6:65") # specify residues to avoid error with pseudo-atoms later.
 potList.append( XplorPot('HBDB') )
 
 # New torsion angle database potential
