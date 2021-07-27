@@ -1,16 +1,16 @@
 import sys
 
+"""
+Command line to run this script:
+xplor -py refine.py
+"""
 xplor.requireVersion("2.34")
 
-#
-# slow cooling protocol in torsion angle space for protein G. Uses 
+# Slow cooling protocol in torsion angle space for protein G. 
+# Uses 
 # NOE, RDC, J-coupling restraints.
-#
 # this version refines from a reasonable model structure.
-#
 # CDS 2005/05/10
-#
-
 
 (opts,args) = xplor.parseArguments(["quick"]) # check for command-line typos
 
@@ -21,74 +21,62 @@ for opt in opts:
         pass
     pass
 
-
 numberOfStructures=5
 
 if quick:
     numberOfStructures=3
     pass
 
-# protocol module has many high-level helper functions.
-#
+# Protocol module has many high-level helper functions.
 import protocol
 protocol.initRandomSeed(3421)   #explicitly set random seed
 
-#
-# annealing settings
-#
-
+# Annealing settings
 command = xplor.command
 
 protocol.initParams("protein")
 #sys.exit()
 
-# read an existing model
-#
+# Read an existing model
 protocol.loadPDB("xplor.pdb")
 xplor.simulation.deleteAtoms("not known")
 
-protocol.fixupCovalentGeom(maxIters=100,useVDW=1)
+protocol.fixupCovalentGeom(maxIters=100, useVDW=1)
 #sys.exit()
 
-#
-# a PotList contains a list of potential terms. This is used to specify which
+# A PotList contains a list of potential terms. This is used to specify which
 # terms are active during refinement.
-#
 from potList import PotList
 potList = PotList()
 
-# parameters to ramp up during the simulated annealing protocol
-#
+# Parameters to ramp up during the simulated annealing protocol
 from simulationTools import MultRamp, StaticRamp, InitialParams
 
 rampedParams=[]
 highTempParams=[]
 
-# compare atomic Cartesian rmsd with a reference structure
-#  backbone and heavy atom RMSDs will be printed in the output
-#  structure files
-#
+# Compare atomic Cartesian rmsd with a reference structure
+# Backbone and heavy atom RMSDs will be printed in the output
+# structure files
 from posDiffPotTools import create_PosDiffPot
 refRMSD = create_PosDiffPot("refRMSD","name CA or name C or name N",
                             pdbFile='xplor.pdb',
                             cmpSel="not name H*")
 
-# orientation Tensor - used with the dipolar coupling term
-#  one for each medium
-#   For each medium, specify a name, and initial values of Da, Rh.
-#
+# Orientation Tensor - used with the dipolar coupling term
+# One for each medium
+# For each medium, specify a name, and initial values of Da, Rh.
 from varTensorTools import create_VarTensor
 
 media={}
 
-#                        medium  Da   rhombicity
+# medium  Da   rhombicity
 
 # using pales
 # DATA Da_HN       6.8491193 
 # DATA Rhombicity  0.14428608
 
-
-for (medium,Da,Rh) in [ ('t',   6.8491193, 0.14428608)]:
+for (medium, Da, Rh) in [ ('t',   6.8491193, 0.14428608)]:
     oTensor = create_VarTensor(medium)
     oTensor.setDa(Da)
     oTensor.setRh(Rh)
@@ -112,7 +100,6 @@ for (medium,Da,Rh) in [ ('t',   6.8491193, 0.14428608)]:
 #      (relative to that for NH) is used.
 #   3) sometimes the reciprocal of the Da^2 is used if there is a large
 #      spread in Da values. Not used here.
-#
 from rdcPotTools import create_RDCPot, scale_toNH
 rdcs = PotList('rdc') 
 for (medium,expt,file,                 scale) in \
@@ -134,9 +121,8 @@ for (medium,expt,file,                 scale) in \
 potList.append(rdcs)
 rampedParams.append( MultRamp(0.05,5.0, "rdcs.setScale( VALUE )") )
 
-# calc. initial tensor orientation
+# Calculate initial tensor orientation
 # and setup tensor calculation during simulated annealing
-#
 from varTensorTools import calcTensorOrientation, calcTensor
 for medium in media.keys():
     calcTensorOrientation(media[medium])
@@ -144,7 +130,7 @@ for medium in media.keys():
     pass
 
 # set up NOE potential
-noe=PotList('noe')
+noe = PotList('noe')
 potList.append(noe)
 from noePotTools import create_NOEPot
 for (name,scale,file) in [('all',1,"final.tbl"),
@@ -171,13 +157,18 @@ rampedParams.append( StaticRamp("potList['CDIH'].setScale(200)") )
 #
 potList['CDIH'].setThreshold( 5 ) #5 degrees is the default value, though
 
-#Set up Zinc coodinating restraints
-
-#dyn.breakAllBondsTo("name ZN2")
-
+# Set up Zinc coodinating restraints
 import protocol
 protocol.initTopology("ion.top")
-protocol.initParams("zinc.par")
+protocol.initParams("ion.par")
+
+"""
+Follow directions in the following patch:
+1, 2, 3, 4 are cysteine residues.
+5 is the zinc atom.
+
+Specify which residue numbers are these cysteine and zinc residues at the end in the !do patch part.
+"""
 
 xplor.command("""
 topology
@@ -187,30 +178,35 @@ AUTO ANGLe=False DIHEdral=False END
 ! 1 and 2 should be CYS
 ! 3 and 4 should be CYS
  presidue ZC4
-! new for zinc-1 
- 
-  delete atom 1HG end
-  delete atom 2HG end
-  delete atom 3HG end
-  delete atom 4HG end
- 
+! new for zinc-2 
+
+!  delete atom 1HG end
+!  delete atom 2HG end
+!  delete atom 3HG end
+!  delete atom 4HG end
+
 !  add bond 5ZN+2 1SG
 !  add bond 5ZN+2 2SG
 !  add bond 5ZN+2 3SG
 !  add bond 5ZN+2 4SG
 
+!  add angle 1SG  5ZN+2 2SG
+!  add angle 1SG  5ZN+2 3SG
+!  add angle 1SG  5ZN+2 4SG
+!  add angle 2SG  5ZN+2 3SG
+!  add angle 2SG  5ZN+2 4SG
+!  add angle 3SG  5ZN+2 4SG
+
 !  add angle 1CB  1SG  5ZN+2 
 !  add angle 2CB  2SG  5ZN+2 
 !  add angle 3CB  3SG  5ZN+2
 !  add angle 4CB  4SG  5ZN+2
-!  end zinc-1
+!  end zinc-2
+!  add improper +HA1 +HA2 -SG +C  !stereo CA
+
+end
 end
 
-!  add improper +HA1 +HA2 -SG +C  !stereo CA
-  
-end 
-end
- 
 !add the PHO groups 
 segment
  setup=true
@@ -219,12 +215,12 @@ number=300
    sequence ZN2 end
  end
 end
- 
+
  
 !param
 !  bond  1SG 5ZN+2 500.0 2.40 !FIX!
-!  bond  2SG 5ZN+2 500.0 2.30      !FIX!
-!  bond  3SG 5ZN+2 500.0 2.40  !FIX!
+!  bond  2SG 5ZN+2 500.0 2.30 !FIX!
+!  bond  3SG 5ZN+2 500.0 2.40 !FIX!
 !  bond  4SG 5ZN+2 500.0 2.40 !FIX!
 !end
  
@@ -234,12 +230,12 @@ end
             reference=2=(resid 16) 
             reference=3=(resid 27) 
             reference=4=(resid 30)
-            reference=5=(resid 300) end
-
- 
+            reference=5=(resid 300) 
+end
  
 """)
- 
+
+sys.exit()
  
 xplor.command("write psf output=z4c.psf end")
 
