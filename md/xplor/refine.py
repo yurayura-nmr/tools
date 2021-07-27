@@ -7,12 +7,11 @@ xplor -py refine.py
 xplor.requireVersion("2.34")
 
 # Slow cooling protocol in torsion angle space for protein G. 
-# Uses 
-# NOE, RDC, J-coupling restraints.
-# this version refines from a reasonable model structure.
+# Uses NOE, RDC, J-coupling restraints.
+# This version refines from a reasonable model structure.
 # CDS 2005/05/10
 
-(opts,args) = xplor.parseArguments(["quick"]) # check for command-line typos
+(opts, args) = xplor.parseArguments(["quick"]) # check for command-line typos
 
 quick=False
 for opt in opts:
@@ -237,37 +236,15 @@ end
 
 
 xplor.command("write psf output=z4c.psf end")
-xplor.command("write pdb output=z4c.pdb end")
 
 sys.exit()
 
-
-#import protocol
-#protocol.genExtendedStructure()
-
-#for i in range(4):
-#    try:
-#        protocol.fixupCovalentGeom(useVDW=1,maxIters=400)
-#        break
-#    except Exception, e:
-#        if e.args[0].startswith("Covalent geometry still violated"):
-#            continue
-#        raise
-#    pass
-
-#from pdbTool import PDBTool
-#PDBTool("z4c.pdb").write()
-
-
-# gyration volume term 
-#
-# gyration volume term 
-#
+# Gyration volume term 
 from gyrPotTools import create_GyrPot
 gyr = create_GyrPot("Vgyr",
                     "resid 6:65") # selection should exclude disordered tails
 potList.append(gyr)
-rampedParams.append( MultRamp(.002,1,"gyr.setScale(VALUE)") )
+rampedParams.append( MultRamp(.002, 1, "gyr.setScale(VALUE)") )
 
 # hbda - distance/angle bb hbond term
 #
@@ -275,33 +252,29 @@ rampedParams.append( MultRamp(.002,1,"gyr.setScale(VALUE)") )
 #potList.append( XplorPot('HBDA') )
 
 # hbdb - knowledge-based backbone hydrogen bond term
-#
 protocol.initHBDB()
 potList.append( XplorPot('HBDB') )
 
-#New torsion angle database potential
-#
+# New torsion angle database potential
 from torsionDBPotTools import create_TorsionDBPot
 torsionDB = create_TorsionDBPot('torsionDB')
 potList.append( torsionDB )
-rampedParams.append( MultRamp(.002,2,"torsionDB.setScale(VALUE)") )
+rampedParams.append( MultRamp(.002, 2, "torsionDB.setScale(VALUE)") )
 
-#
-# setup parameters for atom-atom repulsive term. (van der Waals-like term)
-#
+# Setup parameters for atom-atom repulsive term. (van der Waals-like term)
 potList.append( XplorPot('VDW') )
 rampedParams.append( StaticRamp("protocol.initNBond(nbxmod=4)") )
-rampedParams.append( MultRamp(0.9,0.8,
+rampedParams.append( MultRamp(0.9, 0.8,
                               "command('param nbonds repel VALUE end end')") )
-rampedParams.append( MultRamp(.004,4,
+rampedParams.append( MultRamp(.004, 4,
                               "command('param nbonds rcon VALUE end end')") )
-# nonbonded interaction only between CA atoms
+
+# Nonbonded interaction only between CA atoms
 highTempParams.append( StaticRamp("""protocol.initNBond(cutnb=100,
                                                         rcon=0.004,
                                                         tolerance=45,
                                                         repel=1.2,
                                                         onlyCA=1)""") )
-
 
 potList.append( XplorPot("BOND") )
 potList.append( XplorPot("ANGL") )
@@ -311,26 +284,19 @@ potList.append( XplorPot("IMPR") )
 potList['IMPR'].setThreshold( 5 )
 rampedParams.append( MultRamp(0.1,1,"potList['IMPR'].setScale(VALUE)") )
       
-#sys.exit()
-
-
 # Give atoms uniform weights, except for the anisotropy axis
-#
 protocol.massSetup()
-
 
 # IVM setup
 #   the IVM is used for performing dynamics and minimization in torsion-angle
 #   space, and in Cartesian space.
-#
 from ivm import IVM
 dyn = IVM()
 
-# initially minimize in Cartesian space with only the covalent constraints.
+# Initially minimize in Cartesian space with only the covalent constraints.
 #   Note that bonds, angles and many impropers can't change with the 
 #   internal torsion-angle dynamics
 #   breaks bonds topologically - doesn't change force field
-#
 dyn.potList().add( XplorPot("BOND") )
 dyn.potList().add( XplorPot("ANGL") )
 dyn.potList().add( XplorPot("IMPR") )
@@ -338,23 +304,21 @@ dyn.potList().add( XplorPot("IMPR") )
 dyn.breakAllBondsIn("not resname ANI")
 import varTensorTools
 for m in media.values():
-    m.setFreedom("fix")                 #fix tensor parameters
-    varTensorTools.topologySetup(dyn,m) #setup tensor topology
+    m.setFreedom("fix")                  # Fix tensor parameters
+    varTensorTools.topologySetup(dyn, m) # Setup tensor topology
 
-protocol.initMinimize(dyn,numSteps=1000)
+protocol.initMinimize(dyn, numSteps=1000)
 dyn.run()
 
-# reset ivm topology for torsion-angle dynamics
-#
+# Reset ivm topology for torsion-angle dynamics
 dyn.reset()
 
 for m in media.values():
-#    m.setFreedom("fixDa, fixRh")        #fix tensor Rh, Da, vary orientation
-    m.setFreedom("varyDa, varyRh")      #vary tensor Rh, Da, vary orientation
+#    m.setFreedom("fixDa, fixRh")       # Fix tensor Rh, Da, vary orientation
+    m.setFreedom("varyDa, varyRh")      # Vary tensor Rh, Da, vary orientation
 protocol.torsionTopology(dyn)
 
-# minc used for final cartesian minimization
-#
+# Minc used for final cartesian minimization
 minc = IVM()
 protocol.initMinimize(minc)
 
@@ -363,111 +327,100 @@ for m in media.values():
     pass
 protocol.cartesianTopology(minc)
 
-
-
-# object which performs simulated annealing
-#
+# Object which performs simulated annealing
 from simulationTools import AnnealIVM
 init_t  = 3000.     # Need high temp and slow annealing to converge
-cool = AnnealIVM(initTemp =init_t,
-                 finalTemp=25,
-                 tempStep =12.5,
-                 ivm=dyn,
+cool = AnnealIVM(initTemp = init_t,
+                 finalTemp = 25,
+                 tempStep = 12.5,
+                 ivm = dyn,
                  rampedParams = rampedParams)
 
 def accept(potList):
     """
     return True if current structure meets acceptance criteria
     """
-    if potList['noe'].violations()>0:
+    if potList['noe'].violations() > 0:
         return False
-    if potList['rdc'].rms()>1.2: #this might be tightened some
+    if potList['rdc'].rms() > 1.2: # This might be tightened some
         return False
-    if potList['CDIH'].violations()>0:
+    if potList['CDIH'].violations() > 0:
         return False
-    if potList['BOND'].violations()>0:
+    if potList['BOND'].violations() > 0:
         return False
-    if potList['ANGL'].violations()>0:
+    if potList['ANGL'].violations() > 0:
         return False
-    if potList['IMPR'].violations()>1:
+    if potList['IMPR'].violations()> 1:
         return False
     
     return True
 
 def calcOneStructure(loopInfo):
-    """ this function calculates a single structure, performs analysis on the
+    """ 
+    This function calculates a single structure, performs analysis on the
     structure, and then writes out a pdb file, with remarks.
     """
 
-    # initialize parameters for high temp dynamics.
+    # Initialize parameters for high temp dynamics.
     InitialParams( rampedParams )
-    # high-temp dynamics setup - only need to specify parameters which
-    #   differfrom initial values in rampedParams
+    
+    # High temp dynamics setup - only need to specify parameters which
+    # differ from initial values in rampedParams
     InitialParams( highTempParams )
 
-    # high temp dynamics
-    #
+    # High temp dynamics
     protocol.initDynamics(dyn,
-                          potList=potList, # potential terms to use
-                          bathTemp=init_t,
-                          initVelocities=1,
-                          finalTime=10,    # stops at 10ps or 5000 steps
-                          numSteps=5000,   # whichever comes first
-                          printInterval=100)
+                          potList = potList, # potential terms to use
+                          bathTemp = init_t,
+                          initVelocities = 1,
+                          finalTime = 10,    # stops at 10ps or 5000 steps
+                          numSteps = 5000,   # whichever comes first
+                          printInterval = 100)
 
     dyn.setETolerance( init_t/100 )  #used to det. stepsize. default: t/1000 
     dyn.run()
 
-    # initialize parameters for cooling loop
+    # Initialize parameters for cooling loop
     InitialParams( rampedParams )
 
-
-    # initialize integrator for simulated annealing
-    #
+    # Initialize integrator for simulated annealing
     protocol.initDynamics(dyn,
-                          potList=potList,
-                          numSteps=100,       #at each temp: 100 steps or
-                          finalTime=.2 ,       # .2ps, whichever is less
-                          printInterval=100)
+                          potList = potList,
+                          numSteps = 100,       # At each temp: 100 steps or
+                          finalTime = .2,      # .2ps, whichever is less
+                          printInterval = 100)
 
-    # perform simulated annealing
-    #
+    # Perform simulated annealing
     cool.run()
-              
-              
-    # final torsion angle minimization
-    #
+    
+    # Final torsion angle minimization
     protocol.initMinimize(dyn,
-                          printInterval=50)
+                          printInterval = 50)
     dyn.run()
 
-    # final all- atom minimization
-    #
+    # Final all- atom minimization
     protocol.initMinimize(minc,
-                          potList=potList,
-                          dEPred=10)
+                          potList = potList,
+                          dEPred = 10)
     minc.run()
 
-    #do analysis and write structure when this function returns
+    # Do analysis and write structure when this function returns True (?)
     pass
 
-
-
 from simulationTools import StructureLoop, FinalParams
-StructureLoop(numStructures=numberOfStructures,
-              structLoopAction=calcOneStructure,
-              calcMissingStructs=True, #calculate only missing structures
-              doWriteStructures=True,  #analyze and write coords after calc
-              genViolationStats=True,
-              averagePotList=potList,
-              averageSortPots=[potList['BOND'],potList['ANGL'],potList['IMPR'],
-                               noe,rdcs,potList['CDIH']],
-              averageCrossTerms=refRMSD,
-              averageTopFraction=0.5, #report only on best 50% of structs
-              averageAccept=accept,   #only use structures which pass accept()
-              averageContext=FinalParams(rampedParams),
-              averageFilename="SCRIPT_ave.pdb",    #generate regularized ave structure
-              averageFitSel="name CA",
-              averageCompSel="not resname ANI and not name H*"     ).run()
 
-
+StructureLoop(numStructures = numberOfStructures,
+              structLoopAction = calcOneStructure,
+              calcMissingStructs = True, #calculate only missing structures
+              doWriteStructures = True,  #analyze and write coords after calc
+              genViolationStats = True,
+              averagePotList = potList,
+              averageSortPots = [potList['BOND'],potList['ANGL'],potList['IMPR'],
+                                 noe,rdcs,potList['CDIH']],
+              averageCrossTerms = refRMSD,
+              averageTopFraction = 0.5, #report only on best 50% of structs
+              averageAccept = accept,   #only use structures which pass accept()
+              averageContext = FinalParams(rampedParams),
+              averageFilename = "SCRIPT_ave.pdb",    #generate regularized ave structure
+              averageFitSel = "name CA",
+              averageCompSel = "not resname ANI and not name H*"     ).run()
