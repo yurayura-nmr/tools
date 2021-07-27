@@ -1,0 +1,25 @@
+# Convert ACOs to CNS/XPLOR
+translate off
+read aco talos.aco
+translate xplor
+write aco talos.tbl xplor
+
+# Convert PDB to CNS/XPLOR
+translate off
+pseudo=0               # do not include pseudoatoms in PDB
+read pdb final.pdb
+translate xplor
+write pdb xplor.pdb all
+
+# Convert UPLs to CNS/XPLOR
+translate off
+read upl final.upl
+translate xplor
+pseudo=3               # Use Xplor/CNS pseudoatom names (e.g. HB*)
+write upl final.tbl xplor
+
+# Convert RDC to XPLOR
+translate off
+read rdc nzf_cya.rdc
+translate xplor
+write rdc nzf.rdc xplor
