@@ -1,9 +1,11 @@
+# 1. Torsion angle restraints (from TALOS)
 # Convert ACOs to CNS/XPLOR
 translate off
 read aco talos.aco
 translate xplor
 write aco talos.tbl xplor
 
+# 2. Starting structure (from CYANA's structure calculation)
 # Convert PDB to CNS/XPLOR
 translate off
 pseudo=0               # do not include pseudoatoms in PDB
@@ -11,6 +13,7 @@ read pdb final.pdb
 translate xplor
 write pdb xplor.pdb all
 
+# 3. Upper limit distance lists (from CYANA's automatic NOE assignment)
 # Convert UPLs to CNS/XPLOR
 translate off
 read upl final.upl
@@ -18,6 +21,7 @@ translate xplor
 pseudo=3               # Use Xplor/CNS pseudoatom names (e.g. HB*)
 write upl final.tbl xplor
 
+4. RDC values (and uncertainties from replicated experiments)
 # Convert RDC to XPLOR
 translate off
 read rdc nzf_cya.rdc
