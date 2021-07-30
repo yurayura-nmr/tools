@@ -20,7 +20,11 @@ basicFT2.com -pseudo3D -in fid/test%03d.fid -out ft/test%03d.ft2 -xP0 88 -yP0 -9
 chmod +x nmr.com
 ./nmr.com
 
-sethdr ./ft/test%03d.ft2 -ndim 2
+# Set headers to 2D
+for file in ./ft/*.ft2
+do
+  sethdr "$file" -ndim 2
+done
 
 # From: https://groups.io/g/nmrpipe/topic/71773980?p=Created,,,20,2,0,0
 # basicFT2.com is included in the 2020 version of NMRPipe
