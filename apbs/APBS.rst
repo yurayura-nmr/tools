@@ -1,6 +1,3 @@
-Get started to cook
--------------------
-
 Preparation
 """""""""""
 
